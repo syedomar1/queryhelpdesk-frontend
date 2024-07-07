@@ -7,7 +7,8 @@ function App() {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/hello`)
       .then(response => response.text())
-      .then(data => setMessage(data));
+      .then(data => setMessage(data))
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   return (
