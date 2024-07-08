@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function UserRaiseTicket() {
   const [ticket, setTicket] = useState({
-    ticketNumber: generateTicketNumber(),
+    ticketNumber: 1,
     userName: "",
     issue: "",
   });
@@ -21,17 +21,13 @@ function UserRaiseTicket() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Ticket Submitted:", ticket);
-    setTicket({
-      ticketNumber: generateTicketNumber(),
+    setTicket((prevTicket) => ({
+      ...prevTicket,
+      ticketNumber: prevTicket.ticketNumber + 1,
       userName: "",
       issue: "",
-    });
+    }));
   };
-
-  function generateTicketNumber() {
-    return Math.floor(Math.random() * 1000000);
-  }
-
   return (
     <Layout>
       {

@@ -24,7 +24,7 @@ function UserAllTicket() {
     const dummyTickets = [
       {
         id: 1,
-        issueNumber: "8878",
+        ticketNumber: "8878",
         userName: "John Doe",
         issue: "Sample issue",
         status: "Open",
@@ -33,6 +33,10 @@ function UserAllTicket() {
     setTickets(dummyTickets);
     setLoading(false);
   }, []);
+  const handleDeleteTicket = (ticketId) => {
+    /*  */
+    console.log("Deleting ticket with ID:", ticketId);
+  };
 
   if (loading) return <p>Loading tickets...</p>;
   if (error) return <p>Error loading tickets: {error}</p>;
@@ -48,15 +52,21 @@ function UserAllTicket() {
               <th>User Name</th>
               <th>Issue</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {tickets.map((ticket) => (
               <tr key={ticket.id}>
-                <td>{ticket.issueNumber}</td>
+                <td>{ticket.ticketNumber}</td>
                 <td>{ticket.userName}</td>
                 <td>{ticket.issue}</td>
                 <td>{ticket.status}</td>
+                <td>
+                  <button onClick={() => handleDeleteTicket(ticket.id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
