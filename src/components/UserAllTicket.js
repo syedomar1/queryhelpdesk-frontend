@@ -24,7 +24,7 @@ function UserAllTicket() {
     const dummyTickets = [
       {
         id: 1,
-        issueNumber: "T123",
+        issueNumber: "8878",
         userName: "John Doe",
         issue: "Sample issue",
         status: "Open",
@@ -44,7 +44,7 @@ function UserAllTicket() {
         <table className="ticket-table">
           <thead>
             <tr>
-              <th>Issue Number</th>
+              <th>Ticket Number</th>
               <th>User Name</th>
               <th>Issue</th>
               <th>Status</th>
