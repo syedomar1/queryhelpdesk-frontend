@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import Navbar from './components/Navbar';
+import Admin from './components/Admin';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -11,12 +13,16 @@ function App() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  console.log("message");
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <h1>Message from Backend:</h1>
         <p>{message}</p>
-      </header>
+      </header> */}
+      <Navbar/>
+      <Admin/>
+      <p>{message}</p>
     </div>
   );
 }
