@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import "../styles/UserRaiseTicket.css";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function UserRaiseTicket() {
   const [ticket, setTicket] = useState({
@@ -34,11 +34,13 @@ function UserRaiseTicket() {
 
   return (
     <Layout>
-      {/*<div className="link-to-all-ticket">
-        <Link className="alltickets" to="/UserAllTicket">
-          Show my all tickets
-        </Link>
-      </div>*/}
+      {
+        <div className="link-to-all-ticket">
+          <Link className="alltickets" to="/UserAllTicket">
+            Show my all tickets
+          </Link>
+        </div>
+      }
       <div className="user-raise-ticket-container">
         <h1>Raise a Ticket</h1>
         <form onSubmit={handleSubmit}>
