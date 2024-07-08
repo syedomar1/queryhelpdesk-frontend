@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import Admin from "./components/Admin";
 import UserRaiseTicket from "./components/UserRaiseTicket";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -15,7 +17,6 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  console.log("message");
   return (
     <div className="App">
       <div>
@@ -24,6 +25,8 @@ function App() {
             <Route path="/" element={<Admin />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/userraiseticket" element={<UserRaiseTicket />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
         </BrowserRouter>
         {/* <header className="App-header">
