@@ -22,3 +22,17 @@
 .ticket-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
+.ticket-table button {
+  background-color: #ff6347;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.ticket-table button:hover {
+  background-color: #d9534f;
+}
