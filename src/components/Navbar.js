@@ -7,7 +7,7 @@ export default function Navbar() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            QueryHelpdesk
+            <img src="/logo.png" alt="Logo" height={40}/>
           </Link>
           <button
             className="navbar-toggler"
@@ -40,9 +40,11 @@ export default function Navbar() {
                 </a>
               </li>
               <li className="nav-item">
-                <button className="btn btn-danger text-light" type="submit">
-                  Log Out
-                </button>
+                <Link to="/login" className="nav-link">
+                  <button className="btn btn-success text-light" type="button">
+                    Sign In
+                  </button>
+                </Link>
               </li>
             </ul>
           </div>
