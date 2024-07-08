@@ -1,0 +1,91 @@
+.user-raise-ticket-container {
+  max-width: 600px;
+  margin: 0 auto; /* Center horizontally */
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.user-raise-ticket-container h1,
+.user-raise-ticket-container form,
+.user-raise-ticket-container label,
+.user-raise-ticket-container input,
+.user-raise-ticket-container textarea,
+.user-raise-ticket-container button {
+  width: 100%; /* Full width */
+  text-align: center; /* Center text */
+}
+
+/* Rest of your styles */
+
+.user-raise-ticket-container h1 {
+  /*text-align: center;*/
+  color: #333;
+}
+
+.user-raise-ticket-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-raise-ticket-container label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.user-raise-ticket-container input,
+.user-raise-ticket-container textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.user-raise-ticket-container input[type="text"],
+.user-raise-ticket-container input[type="email"],
+.user-raise-ticket-container input[type="date"],
+.user-raise-ticket-container textarea {
+  font-size: 1rem;
+}
+
+.user-raise-ticket-container button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-raise-ticket-container button:hover {
+  background-color: #0056b3;
+}
+
+.user-raise-ticket-container .error-message {
+  color: red;
+  margin-top: 1rem;
+}
+.link-to-all-ticket {
+  margin-top: 20px;
+}
+
+.alltickets {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #007bff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.alltickets:hover {
+  background-color: #0056b3;
+}
