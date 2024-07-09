@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import "../styles/UserRaiseTicket.css";
+import axios from "axios";
 import { Link } from "react-router-dom";
+
+const backendUrl = process.env.REACT_APP_BACKEND_PROD_URL;
 
 function UserRaiseTicket() {
   const [ticket, setTicket] = useState({
@@ -18,25 +21,30 @@ function UserRaiseTicket() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Ticket Submitted:", ticket);
-    setTicket((prevTicket) => ({
-      ...prevTicket,
-      ticketNumber: prevTicket.ticketNumber + 1,
-      userName: "",
-      issue: "",
-    }));
+    try {
+      await axios.post(`${backendUrl}/api/tickets`, ticket);
+      setTicket((prevTicket) => ({
+        ...prevTicket,
+        ticketNumber: prevTicket.ticketNumber + 1,
+        userName: "",
+        issue: "",
+      }));
+      alert("Ticket submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting ticket:", error);
+      alert("There was an error submitting your ticket.");
+    }
   };
+
   return (
     <Layout>
-      {
-        <div className="link-to-all-ticket">
-          <Link className="alltickets" to="/UserAllTicket">
-            Show my all tickets
-          </Link>
-        </div>
-      }
+      <div className="link-to-all-ticket">
+        <Link className="alltickets" to="/UserAllTicket">
+          Show my all tickets
+        </Link>
+      </div>
       <div className="user-raise-ticket-container">
         <h1>Raise a Ticket</h1>
         <form onSubmit={handleSubmit}>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import "../styles/UserAllTicket.css";
-// import axios from "axios";
+import axios from "axios";
+
+const backendUrl = process.env.REACT_APP_BACKEND_PROD_URL;
 
 function UserAllTicket() {
   const [tickets, setTickets] = useState([]);
@@ -9,33 +11,29 @@ function UserAllTicket() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    /*axios
-       .get("/api/tickets")
-       .then((response) => {
-         setTickets(response.data);
-         setLoading(false);
-      })
-      .catch((error) => {
-         setError(error.message);
-         setLoading(false);
-      });
+    const fetchTickets = async () => {
+      try {
+        const response = await axios.get(`${backendUrl}/api/tickets`);
+        setTickets(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
 
-    */
-    const dummyTickets = [
-      {
-        id: 1,
-        ticketNumber: "8878",
-        userName: "John Doe",
-        issue: "Sample issue",
-        status: "Open",
-      },
-    ];
-    setTickets(dummyTickets);
-    setLoading(false);
+    fetchTickets();
   }, []);
-  const handleDeleteTicket = (ticketId) => {
-    /*  */
-    console.log("Deleting ticket with ID:", ticketId);
+
+  const handleDeleteTicket = async (ticketNumber) => {
+    try {
+      await axios.post(`${backendUrl}/api/tickets/delete`, { ticketNumber });
+      setTickets(
+        tickets.filter((ticket) => ticket.ticketNumber !== ticketNumber)
+      );
+    } catch (error) {
+      console.error("Error deleting ticket:", error);
+    }
   };
 
   if (loading) return <p>Loading tickets...</p>;
@@ -57,13 +55,15 @@ function UserAllTicket() {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <tr key={ticket.id}>
+              <tr key={ticket.ticketNumber}>
                 <td>{ticket.ticketNumber}</td>
                 <td>{ticket.userName}</td>
                 <td>{ticket.issue}</td>
                 <td>{ticket.status}</td>
                 <td>
-                  <button onClick={() => handleDeleteTicket(ticket.id)}>
+                  <button
+                    onClick={() => handleDeleteTicket(ticket.ticketNumber)}
+                  >
                     Delete
                   </button>
                 </td>
