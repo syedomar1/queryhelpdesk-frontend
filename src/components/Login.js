@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Layout from "../components/Layout";
@@ -9,8 +9,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [alert, setAlert] = useState(null);
-  const { login } = useContext(AuthContext);
+  const { isAuthenticated, login } = useContext(AuthContext);
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
