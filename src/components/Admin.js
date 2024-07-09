@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-import { Alert, Button, Container, Table, Form } from "react-bootstrap";
+import { Alert, Button, Container, Table, Form, Row, Col, Card } from "react-bootstrap";
+import { AuthContext } from "./AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Admin() {
@@ -10,44 +12,44 @@ export default function Admin() {
   const [success, setSuccess] = useState("");
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [solution, setSolution] = useState("");
-
   const statusRefs = useRef([]);
+  const navigate = useNavigate();
+  const { isAuthenticated, userRole } = useContext(AuthContext);
 
-  const url = process.env.NODE_ENV === 'production'
+  useEffect(() => {
+    if (!isAuthenticated || userRole !== "admin") {
+      navigate('/'); // Redirect to home page if not authenticated or not an admin
+    } else {
+      fetchTickets();
+    }
+  }, [isAuthenticated, userRole, navigate]);
+
+  const fetchTickets = async () => {
+    const url = process.env.NODE_ENV === 'production'
       ? `${process.env.REACT_APP_BACKEND_URL_PROD}/api/tickets`
       : `${process.env.REACT_APP_BACKEND_URL_LOCAL}/api/tickets`;
-  const url2 = process.env.NODE_ENV === 'production'
-      ? `${process.env.REACT_APP_BACKEND_URL_PROD}/api/tickets/update`
-      : `${process.env.REACT_APP_BACKEND_URL_LOCAL}/api/tickets/update`;
 
-      useEffect(() => {
-        const fetchTickets = async () => {
-          try {
-            const response = await fetch(url);
-            if (response.ok) {
-              const data = await response.json();
-              setTickets(data||[]);
-            } else {
-              console.error("Failed to fetch tickets");
-              setError("Failed to fetch tickets");
-            }
-          } catch (error) {
-            console.error("Error fetching tickets:", error);
-            setError("Error fetching tickets");
-          }
-        };
-    
-        fetchTickets();
-      }, []);
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setTickets(data || []);
+      } else {
+        console.error("Failed to fetch tickets");
+        setError("Failed to fetch tickets");
+      }
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+      setError("Error fetching tickets");
+    }
+  };
 
   useEffect(() => {
     statusRefs.current.forEach((selectElement) => {
       if (selectElement) {
         const updateSelectColor = () => {
-          const selectedOption =
-            selectElement.options[selectElement.selectedIndex];
-          selectElement.className =
-            "form-select custom-select " + selectedOption.className;
+          const selectedOption = selectElement.options[selectElement.selectedIndex];
+          selectElement.className = "form-select custom-select " + selectedOption.className;
         };
 
         updateSelectColor();
@@ -58,15 +60,20 @@ export default function Admin() {
         };
       }
     });
-  }, []);
+  }, [tickets]);
 
   const handleRowClick = (ticket) => {
     setSelectedTicket(ticket);
     setExpandedRow(expandedRow === ticket.ticketNumber ? null : ticket.ticketNumber);
+    setSolution(ticket.solution || "");
   };
 
   const handleSubmit = async () => {
     if (!selectedTicket) return;
+
+    const url2 = process.env.NODE_ENV === 'production'
+      ? `${process.env.REACT_APP_BACKEND_URL_PROD}/api/tickets/update`
+      : `${process.env.REACT_APP_BACKEND_URL_LOCAL}/api/tickets/update`;
 
     try {
       const response = await fetch(url2, {
@@ -76,7 +83,7 @@ export default function Admin() {
           ticketNumber: selectedTicket.ticketNumber,
           userName: selectedTicket.userName,
           solution,
-          status: statusRefs.current.find((ref) => ref && ref.value).value,  // Get selected status
+          status: statusRefs.current[selectedTicket.ticketNumber].value || "Not Viewed",
           updatedBy: 'admin'  // Update with the actual admin username
         })
       });
@@ -85,12 +92,13 @@ export default function Admin() {
         setTickets((prevTickets) =>
           prevTickets.map((ticket) =>
             ticket.ticketNumber === selectedTicket.ticketNumber
-              ? { ...ticket, solution, status: statusRefs.current.find((ref) => ref && ref.value).value }
+              ? { ...ticket, solution, status: statusRefs.current[selectedTicket.ticketNumber].value }
               : ticket
           )
         );
         setSuccess('Ticket updated successfully!');
         setError('');
+        setExpandedRow(null);
       } else {
         console.error('Failed to update ticket');
         setError('Failed to update ticket');
@@ -105,19 +113,12 @@ export default function Admin() {
 
   if (error) return <Alert variant="danger">{error}</Alert>;
 
-  // const issues = [
-  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque illum deserunt et aperiam consectetur excepturi!",
-  //   "@twitter",
-  // ];
-
-  // const users = ["Mark", "Larry the Bird"];
-
   return (
     <Layout>
       <Container className="mt-4">
         <h2 className="mb-4 text-center">Admin - Manage Tickets</h2>
         {success && <Alert variant="success">{success}</Alert>}
-        <Table striped bordered hover className="ticket-table">
+        <Table striped bordered hover responsive className="ticket-table">
           <thead>
             <tr>
               <th>Ticket Number</th>
@@ -141,13 +142,13 @@ export default function Admin() {
                       name="status"
                       ref={(el) => (statusRefs.current[ticket.ticketNumber] = el)}
                       className="form-select"
-                      defaultValue={ticket.status}
+                      defaultValue={ticket.status || "Not Viewed"}
                     >
                       <option value="Not Viewed" className="bg-danger text-light">
                         Not Viewed
                       </option>
-                      <option value="On Progress" className="bg-warning text-dark">
-                        On Progress
+                      <option value="In Progress" className="bg-warning text-dark">
+                        In Progress
                       </option>
                       <option value="Resolved" className="bg-success text-light">
                         Resolved
@@ -157,18 +158,24 @@ export default function Admin() {
                 </tr>
                 {expandedRow === ticket.ticketNumber && (
                   <tr>
-                    <td>Solution:</td>
-                    <td colSpan="3">
-                      <Form.Control
-                        as="textarea"
-                        rows={3}
-                        placeholder="Resolve this issue"
-                        value={solution}
-                        onChange={(e) => setSolution(e.target.value)}
-                      />
-                      <Button variant="primary" onClick={handleSubmit} className="mt-2">
-                        Submit
-                      </Button>
+                    <td colSpan="4">
+                      <Card>
+                        <Card.Body>
+                          <Form.Group controlId="solution">
+                            <Form.Label>Solution:</Form.Label>
+                            <Form.Control
+                              as="textarea"
+                              rows={3}
+                              placeholder="Resolve this issue"
+                              value={solution}
+                              onChange={(e) => setSolution(e.target.value)}
+                            />
+                          </Form.Group>
+                          <Button variant="primary" onClick={handleSubmit} className="mt-2">
+                            Submit
+                          </Button>
+                        </Card.Body>
+                      </Card>
                     </td>
                   </tr>
                 )}
@@ -188,14 +195,14 @@ export default function Admin() {
           text-align: center;
         }
         .btn-primary {
-          background-color: #007bff; /* Primary blue color */
+          background-color: #007bff;
           border: none;
         }
         .btn-primary:hover {
-          background-color: #0056b3; /* Darker blue */
+          background-color: #0056b3;
         }
         h2 {
-          color: #007bff; /* Primary blue color */
+          color: #007bff;
           font-size: 2rem;
           margin-bottom: 2rem;
         }
