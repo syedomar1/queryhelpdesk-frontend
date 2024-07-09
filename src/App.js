@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-// import Navbar from "./components/Navbar";
 import Admin from "./components/Admin";
 import UserRaiseTicket from "./components/UserRaiseTicket";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import UserAllTicket from "./components/UserAllTicket";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Homepage from "./components/Homepage";
+import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AllTickets from "./components/AllTickets";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -18,26 +23,21 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <div>
+    <AuthProvider>
+      <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Admin />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/userraiseticket" element={<UserRaiseTicket />} />
+            <Route path="/" element={<Homepage />} />
+            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+            <Route path="/userraiseticket" element={<ProtectedRoute><UserRaiseTicket /></ProtectedRoute>} />
+            <Route path="/userallticket" element={<ProtectedRoute><UserAllTicket /></ProtectedRoute>} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login/>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/allqueries" element={< AllTickets/>}/> 
           </Routes>
         </BrowserRouter>
-        {/* <header className="App-header">
-        <h1>Message from Backend:</h1>
-        <p>{message}</p>
-      </header> 
-        <Navbar />
-        <Admin />
-        <p>{message}</p>*/}
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 
