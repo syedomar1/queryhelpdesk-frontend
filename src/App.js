@@ -13,14 +13,6 @@ import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}`)
-      .then((response) => response.text())
-      .then((data) => setMessage(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
-
   return (
     <AuthProvider>
       <div className="App">
