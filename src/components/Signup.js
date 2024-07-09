@@ -14,7 +14,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, password, username } = credentials;
-
+    console.log(process.env.NODE_ENV);
     const url = process.env.NODE_ENV === 'production'
       ? `${process.env.REACT_APP_BACKEND_URL_PROD}/api/signup`
       : `${process.env.REACT_APP_BACKEND_URL_LOCAL}/api/signup`;

@@ -21,13 +21,13 @@ function UserRaiseTicket() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch(`${url}?userName=${userName}`);
+        const response = await fetch(`${url}`);
         if (response.ok) {
           const tickets = await response.json();
           const userTickets = tickets.filter(ticket => ticket.userName === userName);
           setTicket(prevTicket => ({
             ...prevTicket,
-            ticketNumber: userTickets.length + 1,
+            ticketNumber: tickets.length+1,
           }));
         } else {
           console.error('Failed to fetch tickets');

@@ -79,6 +79,7 @@ function UserAllTicket() {
               <th>Ticket Number</th>
               <th>User Name</th>
               <th>Issue</th>
+              <th>Solution</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -89,6 +90,7 @@ function UserAllTicket() {
                 <td>{ticket.ticketNumber}</td>
                 <td>{ticket.userName}</td>
                 <td>{ticket.issue}</td>
+                <td>{ticket.solution}</td>
                 <td>{ticket.status}</td>
                 <td>
                   <Button

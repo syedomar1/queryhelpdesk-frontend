@@ -50,6 +50,7 @@ function AllTickets() {
               <th>Ticket Number</th>
               <th>User Name</th>
               <th>Issue</th>
+              <th>Solution</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -59,6 +60,7 @@ function AllTickets() {
                 <td>{ticket.ticketNumber}</td>
                 <td>{ticket.userName}</td>
                 <td>{ticket.issue}</td>
+                <td>{ticket.solution}</td>
                 <td>{ticket.status}</td>
               </tr>
             ))}
