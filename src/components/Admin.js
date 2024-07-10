@@ -147,8 +147,8 @@ export default function Admin() {
                       <option value="Not Viewed" className="bg-danger text-light">
                         Not Viewed
                       </option>
-                      <option value="On Progress" className="bg-warning text-dark">
-                        On Progress
+                      <option value="In Progress" className="bg-warning text-dark">
+                        In Progress
                       </option>
                       <option value="Resolved" className="bg-success text-light">
                         Resolved
