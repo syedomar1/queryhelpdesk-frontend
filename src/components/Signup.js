@@ -19,7 +19,7 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { name, email, password, username } = credentials;
+        const { name, email, password, username ,cpassword} = credentials;
 
         const url = process.env.NODE_ENV === 'production'
             ? `${process.env.REACT_APP_BACKEND_URL_PROD}/api/signup`
@@ -31,7 +31,7 @@ const Signup = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email, password, username })
+                body: JSON.stringify({ name, email, password, username,cpassword })
             });
 
             const json = await response.json();
