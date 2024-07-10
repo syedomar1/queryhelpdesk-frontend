@@ -5,7 +5,7 @@ import { FiLogIn, FiHome, FiFilePlus, FiList, FiCheckSquare } from "react-icons/
 import { MdAccountCircle } from "react-icons/md";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Navbar() {
+function Navbar() {
   const [dropdown, setDropdown] = useState(false);
   const { isAuthenticated, userRole, userName, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -147,4 +147,6 @@ export default function Navbar() {
       `}</style>
     </>
   );
-}
+};
+
+export default Navbar;
