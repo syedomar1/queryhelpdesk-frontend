@@ -62,7 +62,7 @@ const Login = () => {
           setAlert({ message: 'Invalid Details', type: 'danger' });
         }
       } catch (error) {
-        setAlert({ message: 'Incorrect username or password', type: 'danger' });
+        setAlert({ message: 'Incorrect Email ID or Password', type: 'danger' });
       }
     }
   };
