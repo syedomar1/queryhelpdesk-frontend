@@ -3,17 +3,16 @@ import "./App.css";
 import Admin from "./components/Admin";
 import UserRaiseTicket from "./components/UserRaiseTicket";
 import UserAllTicket from "./components/UserAllTicket";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Homepage from "./components/Homepage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AllTickets from "./components/AllTickets";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   const [message, setMessage] = useState("");
-
   return (
     <AuthProvider>
       <div className="App">

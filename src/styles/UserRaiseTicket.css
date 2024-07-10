@@ -10,29 +10,17 @@
   align-items: center; /* Center items horizontally */
 }
 
-.user-raise-ticket-container h1,
-.user-raise-ticket-container form,
-.user-raise-ticket-container label,
-.user-raise-ticket-container input,
-.user-raise-ticket-container textarea,
-.user-raise-ticket-container button {
-  width: 100%; /* Full width */
-  text-align: center; /* Center text */
-}
-
-/* Rest of your styles */
-
 .user-raise-ticket-container h1 {
-  /*text-align: center;*/
   color: #333;
+  text-align: center;
 }
 
 .user-raise-ticket-container form {
-  display: flex;
-  flex-direction: column;
+  width: 100%; /* Full width */
 }
 
 .user-raise-ticket-container label {
+  text-align: right;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   color: #666;
@@ -40,14 +28,13 @@
 
 .user-raise-ticket-container input,
 .user-raise-ticket-container textarea {
+  width: 100%; /* Full width */
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
 .user-raise-ticket-container input[type="text"],
-.user-raise-ticket-container input[type="email"],
-.user-raise-ticket-container input[type="date"],
 .user-raise-ticket-container textarea {
   font-size: 1rem;
 }
@@ -67,10 +54,6 @@
   background-color: #0056b3;
 }
 
-.user-raise-ticket-container .error-message {
-  color: red;
-  margin-top: 1rem;
-}
 .link-to-all-ticket {
   margin-top: 20px;
 }
@@ -88,4 +71,18 @@
 
 .alltickets:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .user-raise-ticket-container {
+    padding: 1.5rem;
+  }
+
+  .user-raise-ticket-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .user-raise-ticket-container label {
+    text-align: left;
+  }
 }

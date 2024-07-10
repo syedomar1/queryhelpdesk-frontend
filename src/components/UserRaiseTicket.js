@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
+import Layout from "../components/Layout";
 import { AuthContext } from './AuthContext';
 import { Alert, Container, Row, Col, Form, Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';  // Ensure Bootstrap styles are imported
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "../styles/UserRaiseTicket.css";
 
 function UserRaiseTicket() {
   const { userName } = useContext(AuthContext);
@@ -24,10 +24,9 @@ function UserRaiseTicket() {
         const response = await fetch(`${url}`);
         if (response.ok) {
           const tickets = await response.json();
-          const userTickets = tickets.filter(ticket => ticket.userName === userName);
           setTicket(prevTicket => ({
             ...prevTicket,
-            ticketNumber: tickets.length==0?1:tickets[tickets.length-1].ticketNumber+1,
+            ticketNumber: tickets.length===0?1:tickets[tickets.length-1].ticketNumber+1,
           }));
         } else {
           console.error('Failed to fetch tickets');
@@ -85,20 +84,13 @@ function UserRaiseTicket() {
   return (
     <Layout>
       <Container className="mt-4">
-        <div className="link-to-all-ticket mb-4 text-center">
-          <Link className="btn btn-primary mx-2" to="/UserAllTicket">
-            Show My All Tickets
-          </Link>
-          <Link className="btn btn-primary mx-2" to="/allqueries">
-            Show All Resolved Issues
-          </Link>
-        </div>
+      {success && <Alert variant="success">{success}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
         <div className="user-raise-ticket-container p-4 rounded shadow bg-white">
           <h1 className="mb-4 text-center">Raise a Ticket</h1>
-          {success && <Alert variant="success">{success}</Alert>}
-          {error && <Alert variant="danger">{error}</Alert>}
+
           <Form onSubmit={handleSubmit}>
-            <Form.Group as={Row} controlId="ticketNumber">
+            <Form.Group as={Row} controlId="ticketNumber" className="mb-3">
               <Form.Label column sm={4}>Ticket Number:</Form.Label>
               <Col sm={8}>
                 <Form.Control
@@ -109,7 +101,7 @@ function UserRaiseTicket() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="userName">
+            <Form.Group as={Row} controlId="userName" className="mb-3">
               <Form.Label column sm={4}>User Name:</Form.Label>
               <Col sm={8}>
                 <Form.Control
@@ -121,7 +113,7 @@ function UserRaiseTicket() {
                 />
               </Col>
             </Form.Group>
-            <Form.Group as={Row} controlId="issue">
+            <Form.Group as={Row} controlId="issue" className="mb-4">
               <Form.Label column sm={4}>Issue:</Form.Label>
               <Col sm={8}>
                 <Form.Control
@@ -135,46 +127,12 @@ function UserRaiseTicket() {
                 />
               </Col>
             </Form.Group>
-            <Button type="submit" variant="primary" className="w-100">Submit Ticket</Button>
+            <div className="d-flex justify-content-center">
+              <Button type="submit" variant="primary">Submit Ticket</Button>
+            </div>
           </Form>
         </div>
       </Container>
-      <style>{`
-        .link-to-all-ticket {
-          margin-bottom: 2rem;
-        }
-        .btn-primary {
-          background-color: #007bff; /* Airbnb Blue Color */
-          border: none;
-        }
-        .btn-primary:hover {
-          background-color: #0056b3; /* Darker Blue */
-        }
-        .user-raise-ticket-container {
-          background: #f9f9f9; /* Light gray background */
-          padding: 2rem;
-          border-radius: 0.5rem;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-          max-width: 600px;
-          margin: 0 auto;
-        }
-        h1 {
-          color: #333;
-          font-size: 2rem;
-          margin-bottom: 1.5rem;
-        }
-        .form-control:focus {
-          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue color focus ring */
-        }
-        @media (max-width: 768px) {
-          .user-raise-ticket-container {
-            padding: 1.5rem;
-          }
-          h1 {
-            font-size: 1.5rem;
-          }
-        }
-      `}</style>
     </Layout>
   );
 }
