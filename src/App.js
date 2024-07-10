@@ -6,7 +6,6 @@ import UserAllTicket from "./components/UserAllTicket";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Homepage from "./components/Homepage";
-import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AllTickets from "./components/AllTickets";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -14,13 +13,6 @@ import { AuthProvider } from "./components/AuthContext";
 
 function App() {
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/hello`)
-      .then((response) => response.text())
-      .then((data) => setMessage(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
 
   return (
     <AuthProvider>

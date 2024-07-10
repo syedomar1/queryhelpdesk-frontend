@@ -27,7 +27,7 @@ function UserRaiseTicket() {
           const userTickets = tickets.filter(ticket => ticket.userName === userName);
           setTicket(prevTicket => ({
             ...prevTicket,
-            ticketNumber: tickets.length+1,
+            ticketNumber: tickets.length==0?1:tickets[tickets.length-1].ticketNumber+1,
           }));
         } else {
           console.error('Failed to fetch tickets');
