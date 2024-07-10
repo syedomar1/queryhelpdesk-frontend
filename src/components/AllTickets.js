@@ -18,7 +18,7 @@ function AllTickets() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch(`${url}?userName=${userName}`);
+        const response = await fetch(`${url}`);
         if (response.ok) {
           const allTickets = await response.json();
           const resolvedTickets = allTickets.filter(ticket => ticket.status === 'Resolved');
