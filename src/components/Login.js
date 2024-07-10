@@ -62,7 +62,7 @@ const Login = () => {
           setAlert({ message: 'Invalid Details', type: 'danger' });
         }
       } catch (error) {
-        setAlert({ message: 'Both local and production logins failed', type: 'danger' });
+        setAlert({ message: 'Incorrect username or password', type: 'danger' });
       }
     }
   };
