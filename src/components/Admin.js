@@ -18,7 +18,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (!isAuthenticated || userRole !== "admin") {
-      navigate('/'); // Redirect to home page if not authenticated or not an admin
+      navigate('/');
     } else {
       fetchTickets();
     }
