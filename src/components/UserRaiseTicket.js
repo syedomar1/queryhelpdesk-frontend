@@ -68,7 +68,7 @@ function UserRaiseTicket() {
         }));
         setSuccess('Ticket submitted successfully!');
         setError("");  // Clear any previous error message
-        setTimeout(() => setSuccess(""), 5000);  // Clear success message after 5 seconds
+        setTimeout(() => setSuccess(""), 5000);
       } else {
         console.error('Failed to submit ticket');
         setError('Failed to submit ticket');
@@ -77,7 +77,7 @@ function UserRaiseTicket() {
     } catch (error) {
       console.error('Error submitting ticket:', error);
       setError('Error submitting ticket');
-      setSuccess("");  // Clear any previous success message
+      setSuccess(""); 
     }
   };
 
