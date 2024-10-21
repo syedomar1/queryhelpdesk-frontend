@@ -56,7 +56,7 @@ const Login = () => {
         const json = await loginRequest(prodUrl);
         if (json.message === 'Logged in successfully') {
           setAlert({ message: 'Logged In Successfully', type: 'success' });
-          login({ name: json.name, role: json.role });
+          login({ name: json.username, role: json.role });
           navigate(json.role === 'user' ? '/userraiseticket' : '/admin');
         } else {
           setAlert({ message: 'Invalid Details', type: 'danger' });
